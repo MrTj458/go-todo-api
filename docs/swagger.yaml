@@ -1,0 +1,191 @@
+definitions:
+  model.Error:
+    properties:
+      code:
+        type: integer
+      detail:
+        type: string
+      fields:
+        items:
+          $ref: '#/definitions/model.ErrorField'
+        type: array
+    type: object
+  model.ErrorField:
+    properties:
+      detail:
+        type: string
+      location:
+        type: string
+      type:
+        type: string
+    type: object
+  model.Todo:
+    properties:
+      completed:
+        type: boolean
+      description:
+        type: string
+      id:
+        type: string
+    type: object
+  model.TodoCreate:
+    properties:
+      description:
+        type: string
+    required:
+    - description
+    type: object
+  model.TodoUpdate:
+    properties:
+      completed:
+        type: boolean
+      description:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: Todo api
+  version: "1.0"
+paths:
+  /api/todos:
+    get:
+      consumes:
+      - application/json
+      description: Get all Todos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Todo'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Get all Todos
+      tags:
+      - todos
+    post:
+      consumes:
+      - application/json
+      description: Create Todo
+      parameters:
+      - description: Add Todo
+        in: body
+        name: todo
+        required: true
+        schema:
+          $ref: '#/definitions/model.TodoCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Todo'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Create Todo
+      tags:
+      - todos
+  /api/todos/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Todo
+      parameters:
+      - description: Todo ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Todo Deleted
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Delete Todo
+      tags:
+      - todos
+    get:
+      consumes:
+      - application/json
+      description: Get Todo by ID
+      parameters:
+      - description: Todo ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Todo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Get Todo by ID
+      tags:
+      - todos
+    put:
+      consumes:
+      - application/json
+      description: Update Todo
+      parameters:
+      - description: Todo ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Todo
+        in: body
+        name: todo
+        required: true
+        schema:
+          $ref: '#/definitions/model.TodoUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Todo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Update Todo
+      tags:
+      - todos
+swagger: "2.0"
