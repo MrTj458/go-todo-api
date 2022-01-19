@@ -16,14 +16,14 @@ func (s *Server) registerTodoRoutes() {
 	r.Delete("/:id", s.handleTodoDelete)
 }
 
-// @Summary Get all Todos
-// @Description Get all Todos
-// @Tags todos
-// @Accept json
-// @Produce json
-// @Success 200 {object} model.Todo
-// @Failure 500 {object} model.Error
-// @Router /api/todos [get]
+// @Summary      Get all Todos
+// @Description  Get all Todos
+// @Tags         todos
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  model.Todo
+// @Failure      500  {object}  model.Error
+// @Router       /api/todos [get]
 func (s *Server) handleTodosIndex(c *fiber.Ctx) error {
 	todos, err := s.TodoService.AllTodos()
 	if err != nil {
@@ -33,16 +33,16 @@ func (s *Server) handleTodosIndex(c *fiber.Ctx) error {
 	return c.JSON(todos)
 }
 
-// @Summary Get Todo by ID
-// @Description Get Todo by ID
-// @Tags todos
-// @Accept json
-// @Produce json
-// @Param id path string true "Todo ID"
-// @Success 200 {object} model.Todo
-// @Failure 400 {object} model.Error
-// @Failure 404 {object} model.Error
-// @Router /api/todos/{id} [get]
+// @Summary      Get Todo by ID
+// @Description  Get Todo by ID
+// @Tags         todos
+// @Accept       json
+// @Produce      json
+// @Param        id   path      string  true  "Todo ID"
+// @Success      200  {object}  model.Todo
+// @Failure      400  {object}  model.Error
+// @Failure      404  {object}  model.Error
+// @Router       /api/todos/{id} [get]
 func (s *Server) handleTodoById(c *fiber.Ctx) error {
 	id, err := uuid.Parse(c.Params("id"))
 	if err != nil {
@@ -59,16 +59,16 @@ func (s *Server) handleTodoById(c *fiber.Ctx) error {
 	return c.JSON(todo)
 }
 
-// @Summary Create Todo
-// @Description Create Todo
-// @Tags todos
-// @Accept json
-// @Produce json
-// @Param todo body model.TodoCreate true "Add Todo"
-// @Success 201 {object} model.Todo
-// @Failure 422 {object} model.Error
-// @Failure 500 {object} model.Error
-// @Router /api/todos [post]
+// @Summary      Create Todo
+// @Description  Create Todo
+// @Tags         todos
+// @Accept       json
+// @Produce      json
+// @Param        todo  body      model.TodoCreate  true  "Add Todo"
+// @Success      201   {object}  model.Todo
+// @Failure      422   {object}  model.Error
+// @Failure      500   {object}  model.Error
+// @Router       /api/todos [post]
 func (s *Server) handleTodoCreate(c *fiber.Ctx) error {
 	todo := model.TodoCreate{}
 
@@ -91,18 +91,18 @@ func (s *Server) handleTodoCreate(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusCreated).JSON(newTodo)
 }
 
-// @Summary Update Todo
-// @Description Update Todo
-// @Tags todos
-// @Accept json
-// @Produce json
-// @param id path string true "Todo ID"
-// @Param todo body model.TodoUpdate true "Update Todo"
-// @Success 200 {object} model.Todo
-// @Failure 400 {object} model.Error
-// @Failure 422 {object} model.Error
-// @Failure 500 {object} model.Error
-// @Router /api/todos/{id} [put]
+// @Summary      Update Todo
+// @Description  Update Todo
+// @Tags         todos
+// @Accept       json
+// @Produce      json
+// @param        id    path      string            true  "Todo ID"
+// @Param        todo  body      model.TodoUpdate  true  "Update Todo"
+// @Success      200   {object}  model.Todo
+// @Failure      400   {object}  model.Error
+// @Failure      422   {object}  model.Error
+// @Failure      500   {object}  model.Error
+// @Router       /api/todos/{id} [put]
 func (s *Server) handleTodoUpdate(c *fiber.Ctx) error {
 	// Get ID from URL param
 	id, err := uuid.Parse(c.Params("id"))
@@ -130,16 +130,16 @@ func (s *Server) handleTodoUpdate(c *fiber.Ctx) error {
 	return c.JSON(todo)
 }
 
-// @Summary Delete Todo
-// @Description Delete Todo
-// @Tags todos
-// @Accept json
-// @Produce json
-// @param id path string true "Todo ID"
-// @Success 204 "Todo Deleted"
-// @Failure 400 {object} model.Error
-// @Failure 500 {object} model.Error
-// @Router /api/todos/{id} [delete]
+// @Summary      Delete Todo
+// @Description  Delete Todo
+// @Tags         todos
+// @Accept       json
+// @Produce      json
+// @param        id   path  string  true  "Todo ID"
+// @Success      204  "Todo Deleted"
+// @Failure      400  {object}  model.Error
+// @Failure      500  {object}  model.Error
+// @Router       /api/todos/{id} [delete]
 func (s *Server) handleTodoDelete(c *fiber.Ctx) error {
 	id, err := uuid.Parse(c.Params("id"))
 	if err != nil {

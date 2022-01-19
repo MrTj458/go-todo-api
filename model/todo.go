@@ -1,7 +1,9 @@
 package model
 
 import (
-	"github.com/MrTj458/fiber-api-todo/validate"
+	"reflect"
+	"strings"
+
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
 )
@@ -21,7 +23,14 @@ type Todo struct {
 }
 
 func (t *Todo) Validate() ([]*ErrorField, bool) {
-	v := validate.New()
+	v := validator.New()
+	v.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
+		if name == "-" {
+			return ""
+		}
+		return name
+	})
 
 	err := v.Struct(t)
 	if err != nil {
@@ -45,7 +54,14 @@ type TodoCreate struct {
 }
 
 func (t *TodoCreate) Validate() ([]*ErrorField, bool) {
-	v := validate.New()
+	v := validator.New()
+	v.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
+		if name == "-" {
+			return ""
+		}
+		return name
+	})
 
 	err := v.Struct(t)
 	if err != nil {
@@ -70,7 +86,14 @@ type TodoUpdate struct {
 }
 
 func (t *TodoUpdate) Validate() ([]*ErrorField, bool) {
-	v := validate.New()
+	v := validator.New()
+	v.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
+		if name == "-" {
+			return ""
+		}
+		return name
+	})
 
 	err := v.Struct(t)
 	if err != nil {

@@ -7,8 +7,8 @@ import (
 	"github.com/MrTj458/fiber-api-todo/inmemory"
 )
 
-// @title Todo api
-// @version 1.0
+// @title    Todo api
+// @version  1.0
 func main() {
 	s := http.NewServer(3000)
 
