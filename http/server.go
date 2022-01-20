@@ -40,7 +40,7 @@ func (s *Server) Run() error {
 
 func errorHandler(ctx *fiber.Ctx, err error) error {
 	if e, ok := err.(*model.Error); ok {
-		ctx.Status(e.Code).JSON(e)
+		return ctx.Status(e.Code).JSON(e)
 	}
 
 	return ctx.SendStatus(fiber.StatusInternalServerError)
