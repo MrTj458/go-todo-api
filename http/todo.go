@@ -79,7 +79,7 @@ func (s *Server) handleTodoCreate(c *fiber.Ctx) error {
 
 	// Validate Todo
 	if errors, ok := todo.Validate(); !ok {
-		return model.NewErrorWithFields(fiber.StatusUnprocessableEntity, "Invalid Todo object received", errors)
+		return model.NewErrorWithFields(fiber.StatusUnprocessableEntity, "invalid Todo object received", errors)
 	}
 
 	// Create new todo

@@ -27,15 +27,25 @@ func NewServer(port int) *Server {
 
 	s.app.Use(logger.New())
 
+	s.app.Static("/", "./public")
+
 	s.app.Get("/swagger/*", swagger.HandlerDefault)
 
 	s.registerTodoRoutes()
+
+	// All other routes, send index.html
+	// This is useful for using single page applications like React or Vue
+	s.app.Get("/*", clientAppHandler)
 
 	return s
 }
 
 func (s *Server) Run() error {
 	return s.app.Listen(":" + strconv.Itoa(s.port))
+}
+
+func clientAppHandler(ctx *fiber.Ctx) error {
+	return ctx.SendFile("public/index.html")
 }
 
 func errorHandler(ctx *fiber.Ctx, err error) error {
